@@ -1,0 +1,41 @@
+<form id="donorForm">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <select name="bloodGroup" required>
+      <option value="">Select Blood Group</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+    </select>
+    <textarea name="address" placeholder="Address" required></textarea>
+    <button type="submit">Register</button>
+  </form>
+  
+  <script>
+    document.getElementById("donorForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+  
+      // Convert form data to JSON
+      const formData = new FormData(e.target);
+      const jsonData = Object.fromEntries(formData.entries());
+  
+      // Send data to Google Apps Script
+      try {
+        const response = await fetch("YOUR_GOOGLE_SCRIPT_URL", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData),
+        });
+        const result = await response.text();
+        alert(result); // Show success/error message
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    });
+  </script>
